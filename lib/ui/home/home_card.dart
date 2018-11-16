@@ -6,6 +6,7 @@ class HomeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(10.0),
       width: (MediaQuery.of(context).size.width -60)/ 2,
       height: 230,
       decoration: BoxDecoration(
@@ -14,7 +15,16 @@ class HomeCard extends StatelessWidget {
       ),
       child: Column(
         children: <Widget>[
-          Text('测试')
+          Text('新疆西红柿',
+            style: TextStyle(
+              fontSize: 15.0,
+              fontWeight: FontWeight.w600,
+
+            ),
+          ),
+          Image.asset('images/Green_Grapes.png',height: 150.0,),
+          
+       
 
         ],
       ),

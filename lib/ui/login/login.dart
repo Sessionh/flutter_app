@@ -52,11 +52,7 @@ class LoginApp extends StatelessWidget {
                    decoration: new  BoxDecoration(
                     image:  DecorationImage(image: AssetImage('images/appLogo.png'), fit: BoxFit.fill),
                     ),
-                  child: Column(
-                    children: <Widget>[
-                      
-                    ],
-                  ),
+                  // child:  MyApp(),
                 ),
               )
 
@@ -77,5 +73,6 @@ class LoginApp extends StatelessWidget {
    
   }
 }
+
 
 

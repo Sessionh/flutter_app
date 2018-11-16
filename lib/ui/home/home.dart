@@ -5,6 +5,7 @@ import 'package:app/bloc/main_bloc.dart';
 import 'package:app/model/main_model.dart';
 import 'package:app/model/home_model.dart';
 import 'home_card.dart';
+import 'package:flutter/rendering.dart';
 
 class HomeApp extends StatelessWidget {
   final MainModel mainModel;
@@ -28,7 +29,7 @@ class HomeApp extends StatelessWidget {
     );
     ScrollController _scrollController = new ScrollController();
     _scrollController.addListener(() {
-      print('底部');
+      // print('底部');
 
     });
 
@@ -101,16 +102,25 @@ class HomeApp extends StatelessWidget {
                       height: 90.0,
                       child: Row(
                         children: <Widget>[
-                          Container(
-                            width: 40.0,
-                            height: 40.0,
-                            margin: EdgeInsets.only(left: 10.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.0),
-                              image:  DecorationImage(image: AssetImage('images/logoUser.jpg'), fit: BoxFit.fill)
+                          GestureDetector(
+                            onTap: () {
+                              print(333);
+                              mainModel.isLogin = false;
+                              main.setData(mainModel);
 
+                            },
+                            child:   Container(
+                              width: 40.0,
+                              height: 40.0,
+                              margin: EdgeInsets.only(left: 10.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.0),
+                                image:  DecorationImage(image: AssetImage('images/logoUser.jpg'), fit: BoxFit.fill)
+
+                              ),
                             ),
                           ),
+                        
                           Container(
                             width: MediaQuery.of(context).size.width - 100,
                             height: 40,
@@ -174,30 +184,61 @@ class HomeApp extends StatelessWidget {
                       )
 
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height -219.0,
-                      child:  ListView.builder(
-                        itemCount: 3,
-                        controller: _scrollController,
-                        itemBuilder: (context, index) {
-                          return     Row(
-                            children: <Widget>[
-                              Expanded(
-                                flex: 1,
-                                child: HomeCard(),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: HomeCard(),
-                              )
+                
+                    Scrollbar(
+                      child:  Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height -219.0,
+                        child: NotificationListener(
+                          onNotification: (ScrollNotification notification) {
+                            if(notification is ScrollEndNotification){
+                              print(notification.metrics.extentAfter);
+                                //下滑到最底部
+                              if(notification.metrics.extentAfter == 0.0){
+                                print('底部');
+                              }
+                                //滑动到最顶部
+                              if(notification.metrics.extentBefore == 0.0){
+                                print('顶部');
+                              }
+                            }
+                            return false;
 
-                            ],
-                          );
-                        },
-                      ),
+                          },
+                          child: ListView.builder(
+                          itemCount: 3,
+                          
+                          controller: _scrollController,
+                          itemBuilder: (context, index) {
+                            if (index == 2) {
+                              return _buildProgressIndicator();
+                            } else {
+                              return Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    flex: 1,
+                                    child: HomeCard(),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: HomeCard(),
+                                  )
+
+                                ],
+                              );
+
+                            }
+                            
+                          },
+                        ),
+                        )
+                        
                       
                     ),
+                        
+                    ),
+                   
+                  
 
                       
                    
@@ -252,6 +293,19 @@ class HomeApp extends StatelessWidget {
     
    
   }
+
+  _buildProgressIndicator() {
+  return new Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: new Center(
+      child: new Opacity(
+        opacity: 1.0,
+        child: new CircularProgressIndicator(),
+      ),
+    ),
+  );
+}
+
 
  
 }

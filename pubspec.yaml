@@ -45,6 +45,10 @@ flutter:
    - images/appLogo.png
    - images/user.png
    - images/logoUser.jpg
+   - images/fruits.png
+   - images/fruits1.png
+   - images/fruits2.png
+   - images/Green_Grapes.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
