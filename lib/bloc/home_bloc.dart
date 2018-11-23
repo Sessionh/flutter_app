@@ -17,7 +17,8 @@ setDate (vm) {
     color: vm.color,
     type: vm.type, 
     leftColor: vm.leftColor, 
-    rightColor: vm.rightColor
+    rightColor: vm.rightColor,
+    isModel: vm.isModel,
   );
   _inList.add(home);
 }

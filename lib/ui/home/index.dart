@@ -8,19 +8,24 @@ class Home extends StatefulWidget {
   final MainModel mainModel;
   Home({Key key, @required this.mainModel}) : super(key: key);
   @override
-  HomeState createState() => new HomeState(mainModel: mainModel);
+  HomeState createState() => new HomeState();
 }
 
 class HomeState extends State<Home>
     with TickerProviderStateMixin {
-  final MainModel mainModel;
-  HomeState({Key key, @required this.mainModel});
+  // final MainModel mainModel;
+  // HomeState({Key key, @required this.mainModel});
   AnimationController controller;
+  AnimationController controller1;
+
   @override
   void initState() {
     super.initState();
     controller = new AnimationController(
-        duration: new Duration(milliseconds: 100), vsync: this);
+        duration: new Duration(milliseconds: 150), vsync: this);
+    controller1 = new AnimationController(
+        duration: new Duration(milliseconds: 200), vsync: this);
+    
   }
 
   @override
@@ -34,7 +39,7 @@ class HomeState extends State<Home>
   Widget build(BuildContext context) {
     return BlocProvider<HomeBloc>(
       bloc: HomeBloc(),
-      child: HomeApp(mainModel, controller),
+      child: HomeApp(widget.mainModel, controller, controller1),
     );
   }
 }
