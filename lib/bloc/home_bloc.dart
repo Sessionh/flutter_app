@@ -19,6 +19,12 @@ setDate (vm) {
     leftColor: vm.leftColor, 
     rightColor: vm.rightColor,
     isModel: vm.isModel,
+    result: vm.result,
+    customRefreshBoxIconPath: vm.customRefreshBoxIconPath,
+    rotationAngle: vm.rotationAngle,
+    customHeaderTipText: vm.customHeaderTipText,
+    defaultRefreshBoxTipText: vm.defaultRefreshBoxTipText,
+    strs: vm.strs,
   );
   _inList.add(home);
 }
@@ -28,14 +34,5 @@ setDate (vm) {
   void dispose() {
     _mainController.close();
   }
-
-
-
-  
-
-  
-
-  
-
   
 }

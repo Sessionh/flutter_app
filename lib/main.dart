@@ -4,6 +4,7 @@ import 'package:app/bloc/main_bloc.dart';
 import 'package:app/model/main_model.dart';
 import 'package:app/ui/home/index.dart';
 import 'package:app/ui/login/index.dart';
+import 'package:app/ui/user/user.dart';
 void main() {
   runApp(BlocProvider<MainBloc>(
     bloc: MainBloc(),

@@ -11,13 +11,18 @@ import 'home_card.dart';
 import 'package:app/common/sticky_header_list.dart';
 import 'package:app/common/sticky_row.dart';
 import 'package:sticky_headers/sticky_headers.dart';
+import 'home_seach.dart';
+import 'home_listView.dart';
+import "package:pull_to_refresh/pull_to_refresh.dart";
 
 
 class HomeApp extends StatelessWidget {
   final MainModel mainModel;
   final AnimationController container;
   final AnimationController container1;
-  HomeApp(this.mainModel, this.container, this.container1);
+  final AnimationController customBoxWaitAnimation;
+  final RefreshController _refreshController;
+  HomeApp(this.mainModel, this.container, this.container1, this.customBoxWaitAnimation, this._refreshController);
   
   
   @override
@@ -159,11 +164,12 @@ class HomeApp extends StatelessWidget {
                                       ),
                                       GestureDetector(
                                         onTap: () {
-                                          if (container1.status == AnimationStatus.dismissed) {
-                                            container1.forward();
-                                          } else if (container1.status == AnimationStatus.completed){
-                                            container1.reverse();
-                                          }
+                                          // if (container1.status == AnimationStatus.dismissed) {
+                                          //   container1.forward();
+                                          // } else if (container1.status == AnimationStatus.completed){
+                                          //   container1.reverse();
+                                          // }
+                                         
 
                                         },
                                         child: Container(
@@ -178,136 +184,98 @@ class HomeApp extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    print('点击');
-                                  },
-                                  child: Center(
-                                    child:   Container(
-                                        margin: EdgeInsets.only(top: 10.0),
-                                        width: MediaQuery.of(context).size.width - 100,
-                                        height: 52.0,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                                          color: Colors.white
-                                        ),
-                                        child: Row(
-                                          children: <Widget>[
-                                          Expanded(
-                                              flex: 1,
-                                              child:  Padding(
-                                                padding: EdgeInsets.only(left: 18.0),
-                                                child: Text('seach...', style: 
-                                                  TextStyle(
-                                                    color: Colors.grey[400],
-                                                    fontSize: 20.0,
-                                                  ),
-                                                    
-                                                    ),
-                                                    
-                                              )
-                                            ),
-                                          Padding(
-                                            padding: EdgeInsets.only(right: 18.0),
-                                            child: Icon(Icons.search),
-                                          )
-                                          ],
-                                        
-                                        ),
-                                      ),
-                                  )
-
+                                HomeSeach(bloc, vm),
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.height -219.0,
+                                  child:  HomeListView(bloc, vm, customBoxWaitAnimation, _refreshController),
                                 ),
+                                //   Container(
+                                //   width: MediaQuery.of(context).size.width,
+                                //   height: MediaQuery.of(context).size.height -219.0,
+                                //   child:  ListView.builder(
+                                //     itemCount: vm.strs.length,
+                                //     itemBuilder: (context, index) {
+                                //       return ListTile(title: new Text("Number ${vm.strs[index]}"));
+                                //     },
+                                //   ),
+
+                                // ),
+                               
+                               
+                                 
                             
-                                Scrollbar(
-                                  child:  Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: MediaQuery.of(context).size.height -219.0,
-                                    child: NotificationListener(
-                                      onNotification: (ScrollNotification notification) {
-                                        if(notification is ScrollEndNotification){
-                                          print(notification.metrics.extentAfter);
-                                            //下滑到最底部
-                                          if(notification.metrics.extentAfter == 0.0){
-                                            print('底部');
-                                          }
-                                            //滑动到最顶部
-                                          if(notification.metrics.extentBefore == 0.0){
-                                            print('顶部');
-                                          }
-                                        }
-                                        return false;
+                                // Scrollbar(
+                                //   child:  Container(
+                                //     width: MediaQuery.of(context).size.width,
+                                //     height: MediaQuery.of(context).size.height -219.0,
+                                //     child: NotificationListener(
+                                //       onNotification: (ScrollNotification notification) {
+                                //         if(notification is ScrollEndNotification){
+                                //           print(notification.metrics.extentAfter);
+                                //             //下滑到最底部
+                                //           if(notification.metrics.extentAfter == 0.0){
+                                //             print('底部');
+                                //           }
+                                //             //滑动到最顶部
+                                //           if(notification.metrics.extentBefore == 0.0){
+                                //             print('顶部');
+                                //           }
+                                //         }
+                                //         return false;
 
-                                      },
-                                      child: 
+                                //       },
+                                //       child: 
                                       
-                                      // ListView.builder(itemBuilder: (context, index) {
-                                      //   return new StickyHeader(
-                                      //     header: new Container(
-                                      //       height: 50.0,
-                                      //       color: Colors.blueGrey[700],
-                                      //       padding: new EdgeInsets.symmetric(horizontal: 16.0),
-                                      //       alignment: Alignment.centerLeft,
-                                      //       child: new Text('Header #$index',
-                                      //         style: const TextStyle(color: Colors.white),
-                                      //       ),
-                                      //     ),
-                                      //     content: new Container(
-                                      //       child: new Image.network('https://imgs.qunarzz.com/p/tts8/1703/94/61eb7ce216efc702.jpg_r_390x260x90_d5dd6341.jpg', fit: BoxFit.cover,
-                                      //         width: double.infinity, height: 200.0),
-                                      //     ),
-                                      //   );
-                                      // }),
+                                //     StickyList.builder(
+                                //       builder: (BuildContext context, int index) {
+                                //         if (index == 0) {
+                                //            return new HeaderRow(
+                                //             child:Container(
+                                //               child: Text('33'),
+                                //             )
+                                //           );
 
-                                    StickyList.builder(
-                                      builder: (BuildContext context, int index) {
-                                        if (index == 0) {
-                                           return new HeaderRow(
-                                            child:SliverAppBar(
-                                              
-                                            )
-                                          );
+                                //         } else if (index == 4){
+                                //            return new HeaderRow(
+                                //             child: Container(
+                                //               color: Colors.blue,
+                                //               height: 20.0,
+                                //             )
+                                //           );
 
-                                        } else if (index == 4){
-                                           return new HeaderRow(
-                                            child: Container(
-                                              color: Colors.blue,
-                                              height: 20.0,
-                                            )
-                                          );
+                                //         } else {
+                                //          return new RegularRow(
+                                //             child: Row(
+                                //               children: <Widget>[
+                                //                 Expanded(
+                                //                   flex: 1,
+                                //                   child: HomeCard(),
+                                //                 ),
+                                //                 Expanded(
+                                //                   flex: 1,
+                                //                   child: HomeCard(),
+                                //                 )
 
-                                        } else {
-                                         return new RegularRow(
-                                            child: Row(
-                                              children: <Widget>[
-                                                Expanded(
-                                                  flex: 1,
-                                                  child: HomeCard(),
-                                                ),
-                                                Expanded(
-                                                  flex: 1,
-                                                  child: HomeCard(),
-                                                )
+                                //               ],
+                                //             ),
 
-                                              ],
-                                            ),
-
-                                          );
+                                //           );
                                        
 
-                                        }
+                                //         }
                                           
                                           
-                                      },
-                                      itemCount:5,
-                                    ),
+                                //       },
+                                //       itemCount:5,
+                                //     ),
 
-                                    )
+                                //     )
                                     
                                   
-                                ),
+                                // ),
                                     
-                                ),
+                                // ),
                               
                               ],
                         ),
