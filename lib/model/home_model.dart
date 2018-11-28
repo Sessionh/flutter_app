@@ -13,6 +13,7 @@ class HomeModel {
   String customHeaderTipText;
   String defaultRefreshBoxTipText;
   List<String> strs;
+  double position;
   
   HomeModel({
     this.title,
@@ -27,6 +28,7 @@ class HomeModel {
     this.customHeaderTipText,
     this.defaultRefreshBoxTipText,
     this.strs,
+    this.position,
     
   });
 
@@ -43,6 +45,7 @@ class HomeModel {
     this.customHeaderTipText: '快尼玛给老子松手！',
     this.defaultRefreshBoxTipText: '快尼玛给老子松手！',
     this.strs: const  ["1","2","3","4","5","6","7","8","9","0"],
+    this.position: 0.0,
 
   });
 }

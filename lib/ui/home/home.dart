@@ -5,12 +5,8 @@ import 'package:app/bloc/main_bloc.dart';
 import 'package:app/model/main_model.dart';
 import 'package:app/model/home_model.dart';
 import 'package:flutter/rendering.dart';
-import 'home_card.dart';
-// import 'home_menu.dart';
-// import 'package:app/common/slide_container.dart';
-import 'package:app/common/sticky_header_list.dart';
-import 'package:app/common/sticky_row.dart';
-import 'package:sticky_headers/sticky_headers.dart';
+import 'home_menu.dart';
+import 'package:app/common/slide_container.dart';
 import 'home_seach.dart';
 import 'home_listView.dart';
 import "package:pull_to_refresh/pull_to_refresh.dart";
@@ -30,24 +26,14 @@ class HomeApp extends StatelessWidget {
     final MainBloc main = BlocProvider.of<MainBloc>(context);
     final HomeBloc bloc = BlocProvider.of<HomeBloc>(context);
     final scaffoldKey = GlobalKey<ScaffoldState>();
-    
      Animation<double> animation1 = new Tween(begin: 0.0, end: 55.0).animate(
       container
     );
      Animation<double> animation = new Tween(begin: 55.0, end: 0.0).animate(
       container
     );
-     Animation<double> pageAnimation = new Tween(begin: 0.0, end:  MediaQuery.of(context).size.width - 60.0).animate(
-      container1
-    );
-     Animation<double> pageAnimation1 = new Tween(begin: 60.0 - MediaQuery.of(context).size.width, end: 0.0 ).animate(
-      container1
-    );
+    final GlobalKey<ContainerState> _slideKey = GlobalKey<ContainerState>();
 
-    
-    
-    
-   
 
     return StreamBuilder(
       initialData: HomeModel.initData(),
@@ -97,246 +83,160 @@ class HomeApp extends StatelessWidget {
           body:
                 Stack(
                 children: <Widget>[
+                  
                   Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    child: Stack(
-                        children: <Widget>[
-                          ClipPath(
-                            clipper: TriangleClipper(),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 280.0,
-                                decoration: BoxDecoration(
-                                  color: const Color.fromRGBO(55, 56, 79, 1.0),
-                                ),
-                              ),
-                          ),
-                          Column(
+                    child: SlideStack(
+                      drawer: DrawerPage(vm, bloc),
+                      child: SlideContainer(
+                        key: _slideKey,
+                        onSlide: (val) {
+                          print(val);
+                          vm.position = val;
+                          bloc.setDate(vm);
+
+                        },
+                        child: 
+                        
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          color: Colors.white,
+                          child: Stack(
                               children: <Widget>[
-                                Container(
-                                  padding: EdgeInsets.only(top: 30.0),
-                                  width: MediaQuery.of(context).size.width,
-                                
-                                  height: 90.0,
-                                  child: Row(
+                                ClipPath(
+                                  clipper: TriangleClipper(),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 350.0,
+                                      decoration: BoxDecoration(
+                                        color: const Color.fromRGBO(55, 56, 79, 1.0),
+                                      ),
+                                    ),
+                                ),
+                                Column(
                                     children: <Widget>[
-                                      GestureDetector(
-                                        onTap: () {
-                                          print(333);
-                                          mainModel.isLogin = false;
-                                          main.setData(mainModel);
-
-                                          // if (container1.status == AnimationStatus.dismissed) {
-                                          //   container1.forward();
-                                           
-                                          //  container1.value = 100.0;
-                                           
-                                          //   vm.isModel = false;
-                                          //   bloc.setDate(vm);
-                                          // } else if (container1.status == AnimationStatus.completed){
-                                          //   container1.reverse();
-                                          // }
-                                        },
-                                        child:   Container(
-                                          width: 40.0,
-                                          height: 40.0,
-                                          margin: EdgeInsets.only(left: 10.0),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(20.0),
-                                            image:  DecorationImage(image: AssetImage('images/logoUser.jpg'), fit: BoxFit.fill)
-
-                                          ),
-                                        ),
-                                      ),
                                       Container(
-                                        width: MediaQuery.of(context).size.width - 100,
-                                        height: 40,
-                                        child: Center(
-                                          child: Text('APP',style: 
-                                            TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 18.0,
-                                            
-                                          )),
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          // if (container1.status == AnimationStatus.dismissed) {
-                                          //   container1.forward();
-                                          // } else if (container1.status == AnimationStatus.completed){
-                                          //   container1.reverse();
-                                          // }
-                                         
+                                        padding: EdgeInsets.only(top: 30.0),
+                                        width: MediaQuery.of(context).size.width,
+                                      
+                                        height: 90.0,
+                                        child: Row(
+                                          children: <Widget>[
+                                            GestureDetector(
+                                              onTap: () {
+                                                print(333);
+                                                
+                                                _slideKey.currentState.openOrClose();
+                                                
+                                              },
+                                              child:   Container(
+                                                width: 40.0,
+                                                height: 40.0,
+                                                margin: EdgeInsets.only(left: 10.0),
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(20.0),
+                                                  image:  DecorationImage(image: AssetImage('images/logoUser.jpg'), fit: BoxFit.fill)
 
-                                        },
-                                        child: Container(
-                                          width: 40.0,
-                                          height: 40.0,
-                                          margin: EdgeInsets.only(right: 10.0),
-                                          child: Icon(Icons.crop_free, size: 33, color: Colors.white,),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: MediaQuery.of(context).size.width - 100,
+                                              height: 40,
+                                              child: Center(
+                                                child: Text('APP',style: 
+                                                  TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 18.0,
+                                                  
+                                                )),
+                                              ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                mainModel.isLogin = false;
+                                                main.setData(mainModel);
+
+                                              },
+                                              child: Container(
+                                                width: 40.0,
+                                                height: 40.0,
+                                                margin: EdgeInsets.only(right: 10.0),
+                                                child: Icon(Icons.crop_free, size: 33, color: Colors.white,),
+                                                
+                                              ),
+                                            ),
                                           
+                                          ],
                                         ),
                                       ),
+                                      HomeSeach(bloc, vm),
+                                      Container(
+                                        width: MediaQuery.of(context).size.width,
+                                        height: MediaQuery.of(context).size.height -219.0,
+                                        child:  HomeListView(bloc, vm, customBoxWaitAnimation, _refreshController),
+                                      ),
+                                      
+                                    
                                     
                                     ],
-                                  ),
-                                ),
-                                HomeSeach(bloc, vm),
-                                Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: MediaQuery.of(context).size.height -219.0,
-                                  child:  HomeListView(bloc, vm, customBoxWaitAnimation, _refreshController),
-                                ),
-                                //   Container(
-                                //   width: MediaQuery.of(context).size.width,
-                                //   height: MediaQuery.of(context).size.height -219.0,
-                                //   child:  ListView.builder(
-                                //     itemCount: vm.strs.length,
-                                //     itemBuilder: (context, index) {
-                                //       return ListTile(title: new Text("Number ${vm.strs[index]}"));
-                                //     },
-                                //   ),
-
-                                // ),
-                               
-                               
-                                 
-                            
-                                // Scrollbar(
-                                //   child:  Container(
-                                //     width: MediaQuery.of(context).size.width,
-                                //     height: MediaQuery.of(context).size.height -219.0,
-                                //     child: NotificationListener(
-                                //       onNotification: (ScrollNotification notification) {
-                                //         if(notification is ScrollEndNotification){
-                                //           print(notification.metrics.extentAfter);
-                                //             //下滑到最底部
-                                //           if(notification.metrics.extentAfter == 0.0){
-                                //             print('底部');
-                                //           }
-                                //             //滑动到最顶部
-                                //           if(notification.metrics.extentBefore == 0.0){
-                                //             print('顶部');
-                                //           }
-                                //         }
-                                //         return false;
-
-                                //       },
-                                //       child: 
-                                      
-                                //     StickyList.builder(
-                                //       builder: (BuildContext context, int index) {
-                                //         if (index == 0) {
-                                //            return new HeaderRow(
-                                //             child:Container(
-                                //               child: Text('33'),
-                                //             )
-                                //           );
-
-                                //         } else if (index == 4){
-                                //            return new HeaderRow(
-                                //             child: Container(
-                                //               color: Colors.blue,
-                                //               height: 20.0,
-                                //             )
-                                //           );
-
-                                //         } else {
-                                //          return new RegularRow(
-                                //             child: Row(
-                                //               children: <Widget>[
-                                //                 Expanded(
-                                //                   flex: 1,
-                                //                   child: HomeCard(),
-                                //                 ),
-                                //                 Expanded(
-                                //                   flex: 1,
-                                //                   child: HomeCard(),
-                                //                 )
-
-                                //               ],
-                                //             ),
-
-                                //           );
-                                       
-
-                                //         }
-                                          
-                                          
-                                //       },
-                                //       itemCount:5,
-                                //     ),
-
-                                //     )
-                                    
-                                  
-                                // ),
-                                    
-                                // ),
-                              
-                              ],
-                        ),
-                        Positioned(
-                          bottom: 0.0,
-                          child:   Container(
-                          height:65.0,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            color: Color(0xffffffff),
-                            boxShadow: <BoxShadow>[
-                              new BoxShadow (
-                                color: Colors.grey[300],
-                                offset:   Offset.zero,
-                                blurRadius: 4.0,
                               ),
-                            
-                            ], 
-                          ),
-                          child: AnimatedBuilder(
-                            animation: container,
-                            builder: (BuildContext context, Widget widget){
-                              return Row(
-                              children: <Widget>[
-                                Expanded(
-                                  flex: 1,
-                                  child: butAnimation(animation, 0, Icons.home, vm.leftColor)
+                              Positioned(
+                                bottom: 0.0,
+                                child:   Container(
+                                height:65.0,
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  color: Color(0xffffffff),
+                                  boxShadow: <BoxShadow>[
+                                    new BoxShadow (
+                                      color: Colors.grey[300],
+                                      offset:   Offset.zero,
+                                      blurRadius: 4.0,
+                                    ),
+                                  
+                                  ], 
                                 ),
-                                Expanded(
-                                  flex: 1,
-                                  child: butAnimation(animation1, 1, Icons.shopping_cart, vm.rightColor),
-                                ),
+                                child: AnimatedBuilder(
+                                  animation: container,
+                                  builder: (BuildContext context, Widget widget){
+                                    return Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                        flex: 1,
+                                        child: butAnimation(animation, 0, Icons.home, vm.leftColor)
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: butAnimation(animation1, 1, Icons.shopping_cart, vm.rightColor),
+                                      ),
+                                      
+                                    ],
+                                  );
+                              })
                                 
+
+                              ),
+                              ),
+
+
                               ],
-                            );
-                        })
-                          
-
-                        ),
+                            ),
                         ),
 
 
-                        ],
+                        slideDirection: SlideDirection.left,
+                        // onSlide: onSlide,
+                        drawerSize:  MediaQuery.of(context).size.width * 0.80,
                       ),
+                      
+                    ),
                   ),
                   
-                  // Container(
-                  //     width: MediaQuery.of(context).size.width - 60.0,
-                  //     height: MediaQuery.of(context).size.height,
-                  //     transform: Matrix4.translationValues(pageAnimation1.value, 0, 0),
-                  //     color: Colors.white,
-                  //     child: IconButton(
-                  //       icon: Icon(Icons.save_alt),
-                  //       onPressed: () {
-                  //         print(111);
-                  //         vm.isModel = true;
-                  //         bloc.setDate(vm);
-                  //         container1.reverse();
-                  //       },
-                  //     ),
-                  // )
+                  
+
+
                 ],
               ),
                   

@@ -39,6 +39,7 @@ class _StackState extends State<SlideStack> {
   }
 }
 
+
 /// Container that can be slid.
 ///
 /// Will automatically finish the slide animation when the drag gesture ends.
@@ -155,7 +156,7 @@ class ContainerState extends State<SlideContainer>
         AnimationController(vsync: this, duration: widget.autoSlideDuration)
           ..addListener(() {
             if (widget.onSlide != null)
-              widget.onSlide(animationController.value);
+              widget.onSlide(animationController.value * maxDragDistance * dragTarget.sign);
             setState(() {});
           });
 
@@ -274,16 +275,6 @@ class ContainerState extends State<SlideContainer>
     if (hasShadow) {
       return Container(
         child: widget.child,
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black54,
-              offset: Offset(10.0, 0.0),
-              blurRadius: widget.shadowBlurRadius,
-              spreadRadius: widget.shadowSpreadRadius,
-            ),
-          ],
-        ),
         transform: widget.transform,
       );
     } else {

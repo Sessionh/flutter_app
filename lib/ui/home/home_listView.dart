@@ -25,7 +25,7 @@ class HomeListView extends StatelessWidget {
      List<Widget> data = [];
 
          _getDatas() {
-          for (int i = 0; i < 14; i++) {
+          for (int i = 0; i < 4; i++) {
             data.add(
               Row(
                 children: <Widget>[

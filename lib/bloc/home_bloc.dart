@@ -25,6 +25,7 @@ setDate (vm) {
     customHeaderTipText: vm.customHeaderTipText,
     defaultRefreshBoxTipText: vm.defaultRefreshBoxTipText,
     strs: vm.strs,
+    position: vm.position,
   );
   _inList.add(home);
 }
