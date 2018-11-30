@@ -3,7 +3,7 @@ import 'home.dart';
 import 'package:app/model/main_model.dart';
 import 'package:app/bloc/bloc_provider.dart';
 import 'package:app/bloc/home_bloc.dart';
-import "package:pull_to_refresh/pull_to_refresh.dart";
+import "package:app/common/flutter_pulltorefresh/pull_to_refresh.dart";
 
 class Home extends StatefulWidget {
   final MainModel mainModel;
@@ -30,12 +30,16 @@ class HomeState extends State<Home>
     controller1 = new AnimationController(
         duration: new Duration(milliseconds: 200), vsync: this);
      customBoxWaitAnimation=new AnimationController(duration: const Duration(milliseconds: 1000*100), vsync: this);
+    
+   
      super.initState();
   }
 
   @override
   void dispose() {
     controller.dispose();
+    controller1.dispose();
+    customBoxWaitAnimation.dispose();
     super.dispose();
   }
 

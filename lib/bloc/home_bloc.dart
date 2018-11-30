@@ -26,6 +26,8 @@ setDate (vm) {
     defaultRefreshBoxTipText: vm.defaultRefreshBoxTipText,
     strs: vm.strs,
     position: vm.position,
+    isSearch: vm.isSearch,
+    viewHeight: vm.viewHeight,
   );
   _inList.add(home);
 }

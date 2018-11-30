@@ -14,17 +14,18 @@ class HomeSeach extends StatelessWidget {
         onTap: () {
           print('搜索');
           model.title = '测试';
-          List<String> list = [];
-          list.addAll(model.strs);
-          list.add('a');
-          model.strs = list;
           bloc.setDate(model);
+        },
+        onVerticalDragUpdate: (ev) {
+          print(ev);
+          print('3333');
+
         },
         child: Center(
           child:   Container(
               margin: EdgeInsets.only(top: 10.0),
               width: MediaQuery.of(context).size.width - 100,
-              height: 52.0,
+              height: 52.0 - model.viewHeight,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                 color: Colors.white
@@ -38,16 +39,19 @@ class HomeSeach extends StatelessWidget {
                       child: Text('seach...${model.title}', style: 
                         TextStyle(
                           color: Colors.grey[400],
-                          fontSize: 20.0,
+                          fontSize: model.viewHeight > 50.0 ? 0.0 : 18.0,
                         ),
                           
-                          ),
+                      ),
                           
                     )
                   ),
                 Padding(
                   padding: EdgeInsets.only(right: 18.0),
-                  child: Icon(Icons.search),
+                  child: Icon(
+                    Icons.search,
+                    size: model.viewHeight > 50.0 ? 0.0 : 22.0,
+                  ),
                 )
                 ],
               

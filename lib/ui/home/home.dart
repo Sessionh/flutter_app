@@ -9,7 +9,7 @@ import 'home_menu.dart';
 import 'package:app/common/slide_container.dart';
 import 'home_seach.dart';
 import 'home_listView.dart';
-import "package:pull_to_refresh/pull_to_refresh.dart";
+import "package:app/common/flutter_pulltorefresh/pull_to_refresh.dart";
 
 
 class HomeApp extends StatelessWidget {
@@ -18,7 +18,12 @@ class HomeApp extends StatelessWidget {
   final AnimationController container1;
   final AnimationController customBoxWaitAnimation;
   final RefreshController _refreshController;
-  HomeApp(this.mainModel, this.container, this.container1, this.customBoxWaitAnimation, this._refreshController);
+  HomeApp(this.mainModel, 
+       this.container, 
+       this.container1, 
+       this.customBoxWaitAnimation, 
+       this._refreshController, 
+       );
   
   
   @override
@@ -86,21 +91,31 @@ class HomeApp extends StatelessWidget {
                   
                   Container(
                     child: SlideStack(
-                      drawer: DrawerPage(vm, bloc),
+                      drawer: DrawerPage(vm, bloc,_slideKey),
                       child: SlideContainer(
                         key: _slideKey,
                         onSlide: (val) {
                           print(val);
                           vm.position = val;
                           bloc.setDate(vm);
+                          if (val == 0.0) {
+                            vm.isModel = true;
+                            bloc.setDate(vm);
+
+                          } else {
+                            if (vm.isModel) {
+                               vm.isModel = false;
+                                bloc.setDate(vm);
+
+                            }
+                           
+                          }
 
                         },
-                        child: 
-                        
-                        Container(
+                        child:  Container(
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height,
-                          color: Colors.white,
+                          color: Colors.grey[300],
                           child: Stack(
                               children: <Widget>[
                                 ClipPath(
@@ -124,9 +139,10 @@ class HomeApp extends StatelessWidget {
                                           children: <Widget>[
                                             GestureDetector(
                                               onTap: () {
-                                                print(333);
                                                 
                                                 _slideKey.currentState.openOrClose();
+                                                vm.isModel = false;
+                                                bloc.setDate(vm);
                                                 
                                               },
                                               child:   Container(
@@ -172,9 +188,10 @@ class HomeApp extends StatelessWidget {
                                         ),
                                       ),
                                       HomeSeach(bloc, vm),
+                                      
                                       Container(
                                         width: MediaQuery.of(context).size.width,
-                                        height: MediaQuery.of(context).size.height -219.0,
+                                        height: MediaQuery.of(context).size.height -219.0 + vm.viewHeight,
                                         child:  HomeListView(bloc, vm, customBoxWaitAnimation, _refreshController),
                                       ),
                                       
@@ -220,6 +237,23 @@ class HomeApp extends StatelessWidget {
                               ),
                               ),
 
+                              Offstage(
+                                offstage: vm.isModel,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    _slideKey.currentState.openOrClose();
+                                    
+                                  },
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height,
+                                    color: Color.fromRGBO(0, 0, 0, .5),
+                                  ),
+                                )
+                                
+                              )
+
+                              
 
                               ],
                             ),
@@ -233,6 +267,8 @@ class HomeApp extends StatelessWidget {
                       
                     ),
                   ),
+                
+                  
                   
                   
 
@@ -250,19 +286,6 @@ class HomeApp extends StatelessWidget {
     
    
   }
-
-  _buildProgressIndicator() {
-  return new Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: new Center(
-      child: new Opacity(
-        opacity: 1.0,
-        child: new CircularProgressIndicator(),
-      ),
-    ),
-  );
-}
-
 
  
 }

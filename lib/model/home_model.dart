@@ -14,6 +14,8 @@ class HomeModel {
   String defaultRefreshBoxTipText;
   List<String> strs;
   double position;
+  bool isSearch; // 是否显示 搜索框
+  double viewHeight; // 改变  search 高度
   
   HomeModel({
     this.title,
@@ -29,6 +31,8 @@ class HomeModel {
     this.defaultRefreshBoxTipText,
     this.strs,
     this.position,
+    this.isSearch,
+    this.viewHeight,
     
   });
 
@@ -46,6 +50,8 @@ class HomeModel {
     this.defaultRefreshBoxTipText: '快尼玛给老子松手！',
     this.strs: const  ["1","2","3","4","5","6","7","8","9","0"],
     this.position: 0.0,
+    this.isSearch: false,
+    this.viewHeight: 0.0,
 
   });
 }

@@ -99,7 +99,7 @@ class SlideContainer extends StatefulWidget {
     this.shadowBlurRadius = 15.0,
     this.shadowSpreadRadius = 10.0,
     this.minAutoSlideDragVelocity = 600.0,
-    this.autoSlideDuration = const Duration(milliseconds: 250),
+    this.autoSlideDuration = const Duration(milliseconds: 200),
     this.dragDampening = 8.0,
     this.minAutoSlideDistance,
     this.drawerSize,
