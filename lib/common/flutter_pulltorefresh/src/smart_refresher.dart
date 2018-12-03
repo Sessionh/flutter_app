@@ -214,7 +214,8 @@ class _SmartRefresherState extends State<SmartRefresher> {
         }
       }
     } else {
-      print(_scrollController.position.axisDirection);
+      
+      print(_scrollController.offset);
        widget.onOffsetChange(false,  _scrollController.position.pixels, id: 2);
     }
   }
@@ -341,12 +342,16 @@ class _SmartRefresherState extends State<SmartRefresher> {
               left: 0.0,
               right: 0.0,
               child: new NotificationListener(
-                child: new CustomScrollView(
-                  physics: new RefreshScrollPhysics(enableOverScroll: widget.enableOverScroll),
-                  controller: _scrollController,
-                  slivers:  slivers,
-                  
+                child: 
+                  Scrollbar(
+                    child:  new CustomScrollView(
+                    physics: new RefreshScrollPhysics(enableOverScroll: widget.enableOverScroll),
+                    controller: _scrollController,
+                    slivers:  slivers,
+                    
+                  ),
                 ),
+               
                 onNotification: _dispatchScrollEvent,
               )),
         ],

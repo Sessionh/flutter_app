@@ -45,11 +45,11 @@ class DrawerPage extends StatelessWidget {
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.only(right: 20.0),
-                            child: Icon(info.icon, size: 20.0, color: Colors.grey,),
+                            child: Icon(info.icon, size: 18.0, color: Colors.grey,),
                           ),
                           Expanded(
                             flex: 1,
-                            child: Text(info.title, style: TextStyle(fontSize: 20.0, color: Colors.grey),),
+                            child: Text(info.title, style: TextStyle(fontSize: 18.0, color: Colors.grey),),
                           )
                         ],
                       ),
@@ -162,10 +162,14 @@ class DrawerPage extends StatelessWidget {
 
                             },
                             child: Wrap(
-                              spacing: 8.0, 
+                              // spacing: 8.0, 
                               children: <Widget>[
-                                Icon(Icons.edit_location, color: const Color.fromRGBO(55, 56, 79, 1.0)),
-                                Text('个人中心', style: TextStyle(color: Colors.grey),)
+                                Padding(
+                                  padding: EdgeInsets.only(top: 3.8),
+                                  child: Icon(Icons.edit_location, color: const Color.fromRGBO(55, 56, 79, 1.0)),
+                                ),
+                                
+                                Text('个人中心', style: TextStyle(color: Colors.grey, fontSize: 18.0),)
                                 
                               ],
                             ),
@@ -184,8 +188,11 @@ class DrawerPage extends StatelessWidget {
                             child: Wrap(
                               spacing: 8.0, 
                               children: <Widget>[
-                                Icon(Icons.input, color: const Color.fromRGBO(55, 56, 79, 1.0)),
-                                Text('退出登陆', style: TextStyle(color: Colors.grey),)
+                                 Padding(
+                                  padding: EdgeInsets.only(top: 3.6),
+                                  child: Icon(Icons.input, color: const Color.fromRGBO(55, 56, 79, 1.0)),
+                                ),
+                                Text('退出登陆', style: TextStyle(color: Colors.grey, fontSize: 18.0),)
                                 
                               ],
                             ),
