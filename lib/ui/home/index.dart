@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'home.dart';
 import 'package:app/model/main_model.dart';
 import 'package:app/bloc/bloc_provider.dart';
@@ -31,8 +32,8 @@ class HomeState extends State<Home>
         duration: new Duration(milliseconds: 200), vsync: this);
      customBoxWaitAnimation=new AnimationController(duration: const Duration(milliseconds: 1000*100), vsync: this);
     
-   
-     super.initState();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+    super.initState();
   }
 
   @override
@@ -46,6 +47,7 @@ class HomeState extends State<Home>
 
   @override
   Widget build(BuildContext context) {
+    
     return BlocProvider<HomeBloc>(
       bloc: HomeBloc(),
       child: HomeApp(widget.mainModel, controller, controller1, customBoxWaitAnimation, _refreshController),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'login.dart';
 import 'package:app/model/main_model.dart';
 import 'package:app/bloc/bloc_provider.dart';
@@ -19,6 +20,7 @@ class LoginScreenState extends State<Login>
     super.initState();
     loginButtonController = new AnimationController(
         duration: new Duration(milliseconds: 3000), vsync: this);
+     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
   }
 
   @override
@@ -30,6 +32,7 @@ class LoginScreenState extends State<Login>
 
   @override
   Widget build(BuildContext context) {
+    
     return BlocProvider<LoginBloc>(
       bloc: LoginBloc(),
       child: LoginApp(widget.mainModel, loginButtonController)

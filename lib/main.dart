@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:app/bloc/bloc_provider.dart';
 import 'package:app/bloc/main_bloc.dart';
 import 'package:app/model/main_model.dart';
@@ -16,6 +17,10 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Color.fromRGBO(0, 0, 0, 0.0),
+    ));
+      
 
     final MainBloc bloc = BlocProvider.of<MainBloc>(context);
     return MaterialApp(
