@@ -25,7 +25,8 @@ dependencies:
   sticky_headers: ^0.1.7
   pull_to_refresh: ^1.1.6
   http: ^0.12.0
-  # device_info: ^0.2.1
+  flutter_webview_plugin: ^0.3.0+1
+  device_info: ^0.2.1
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +58,7 @@ flutter:
    - images/icon_arrow.png
    - images/icon_cry.png
    - images/logoUser.png
+   - images/logos21.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
