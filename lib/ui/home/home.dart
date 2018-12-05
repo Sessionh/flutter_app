@@ -10,6 +10,7 @@ import 'package:app/common/slide_container.dart';
 import 'home_seach.dart';
 import 'home_listView.dart';
 import "package:app/common/flutter_pulltorefresh/pull_to_refresh.dart";
+import 'package:app/libs/util.dart';
 
 
 class HomeApp extends StatelessWidget {
@@ -38,6 +39,7 @@ class HomeApp extends StatelessWidget {
       container
     );
     final GlobalKey<ContainerState> _slideKey = GlobalKey<ContainerState>();
+    Util.setUIStyle(true);
 
 
     return StreamBuilder(
@@ -91,7 +93,17 @@ class HomeApp extends StatelessWidget {
                   
                   Container(
                     child: SlideStack(
-                      drawer: DrawerPage(vm, bloc,_slideKey),
+                      drawer: DrawerPage(vm, bloc,_slideKey, () {
+
+                          _slideKey.currentState.openOrClose();
+                          vm.isModel = false;
+                          bloc.setDate(vm);
+                          Util.setTimeOut(300, () {
+                            mainModel.isLogin = false;
+                            main.setData(mainModel);
+                          });
+
+                      }),
                       child: SlideContainer(
                         key: _slideKey,
                         onSlide: (val) {
@@ -171,8 +183,7 @@ class HomeApp extends StatelessWidget {
                                             ),
                                             GestureDetector(
                                               onTap: () {
-                                                mainModel.isLogin = false;
-                                                main.setData(mainModel);
+                                                
 
                                               },
                                               child: Container(

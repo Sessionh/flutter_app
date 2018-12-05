@@ -18,8 +18,8 @@ class LoginBloc implements BlocBase {
   void dispose() {
     _mainController.close();
   }
-  Icon iconType (int iconTypePassword) {
-      if (iconTypePassword == 0) {
+  Icon iconType (bool type) {
+      if (type) {
         return Icon(Icons.visibility_off,color: Colors.black54);
       } else {
         return Icon(Icons.remove_red_eye,color: Colors.black54);
@@ -28,10 +28,21 @@ class LoginBloc implements BlocBase {
   }
 
   setDate (vm) {
-    LoginModel login = new LoginModel(userName: vm.userName, password: vm.password);
+    LoginModel login = new LoginModel(
+      userName: vm.userName, 
+      password: vm.password, 
+      obscureText: vm.obscureText,
+      isDarkTheme: vm.isDarkTheme,
+    );
     _inList.add(login);
 
   }
+   forSubmitted(formKey) {
+    var _form = formKey.currentState;
+    if (_form.validate()) {
+      _form.save();
+    }
+   }
 
 
 

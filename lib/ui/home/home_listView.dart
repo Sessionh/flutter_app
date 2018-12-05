@@ -22,37 +22,22 @@ class HomeListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-     List<Widget> data = [];
-     
-
-         _getDatas() {
-          for (int i = 0; i < 4; i++) {
-            data.add(
-              HomeCard(),
-              // Row(
-              //   children: <Widget>[
-              //     Expanded(
-              //       flex: 1,
-              //       child: HomeCard(),
-              //     ),
-              //     Expanded(
-              //       flex: 1,
-              //       child: HomeCard(),
-              //     )
-
-              //   ],
-              // ),
-            );
-          }
-        }
+    List<Widget> data = [];
+    _getDatas() {
+      for (int i = 0; i < 4; i++) {
+        data.add(
+          HomeCard(),
+        );
+      }
+    }
 
        
 
-        _getDatas();
+    _getDatas();
 
-         Widget _buildHeader(context,mode){
-          return new ClassicIndicator(mode: mode, textStyle: TextStyle(color: Colors.white),refreshingText: '刷新',);
-        }
+    Widget _buildHeader(context,mode){
+      return new ClassicIndicator(mode: mode, textStyle: TextStyle(color: Colors.white),refreshingText: '刷新',);
+    }
       
 
 

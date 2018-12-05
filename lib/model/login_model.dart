@@ -14,7 +14,7 @@ class LoginModel {
   LoginModel.initDate({
     this.userName: '张三',
     this.password: '',
-    this.obscureText: false,
+    this.obscureText: true,
     this.isDarkTheme: false,
   });
 }

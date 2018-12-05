@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'login.dart';
 import 'package:app/model/main_model.dart';
 import 'package:app/bloc/bloc_provider.dart';
@@ -20,7 +19,6 @@ class LoginScreenState extends State<Login>
     super.initState();
     loginButtonController = new AnimationController(
         duration: new Duration(milliseconds: 3000), vsync: this);
-     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
   }
 
   @override

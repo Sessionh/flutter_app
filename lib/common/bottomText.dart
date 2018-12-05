@@ -5,7 +5,14 @@ class ButtomText extends StatefulWidget {
   final double fontSize;
   final Color textColor;
   final String text;
-  ButtomText({Key key, this.fontSize: 18.0, this.textColor: Colors.grey, this.text: ''}): super(key: key);
+  final Function result;
+  final Color focusColor;
+  ButtomText({Key key, 
+  this.fontSize: 18.0, 
+  this.textColor: Colors.grey, 
+  this.text: '', 
+  this.result, 
+  this.focusColor: Colors.blue}):assert(result != null),super(key: key);
 
   @override
   ButtomTextApp createState() => ButtomTextApp();
@@ -25,6 +32,14 @@ class ButtomTextApp extends State<ButtomText> {
               onTap: () {
                 // type = true;
                 // _streamController.sink.add(type);
+                widget.result();
+              },
+              
+              onScaleUpdate: (ev) {
+                print('离开');
+                type = false;
+                _streamController.sink.add(type);
+
               },
               onTapDown: (ev) {
                 print(45);
@@ -38,7 +53,7 @@ class ButtomTextApp extends State<ButtomText> {
 
               },
               child: Text(widget.text, style: TextStyle(
-                color: type ? Colors.blue : widget.textColor ,
+                color: type ? widget.focusColor : widget.textColor ,
                 fontSize: widget.fontSize,
 
               ),),

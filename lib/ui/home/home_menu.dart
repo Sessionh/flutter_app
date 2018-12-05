@@ -17,17 +17,18 @@ class _MenuInfo {
 }
 
 final List<_MenuInfo> menus = [
-  _MenuInfo(id: 1, title: '了解会员特权', icon: Icons.accessibility, top: 0.0),
-  _MenuInfo(id: 2, title: 'QQ钱包', icon: Icons.account_balance_wallet, top: 20.0),
-  _MenuInfo(id: 3, title: '个性装扮', icon: Icons.format_paint, top: 20.0),
+  _MenuInfo(id: 1, title: '菜单1', icon: Icons.accessibility, top: 0.0),
+  _MenuInfo(id: 2, title: '菜单2', icon: Icons.account_balance_wallet, top: 20.0),
+  _MenuInfo(id: 3, title: '菜单3', icon: Icons.format_paint, top: 20.0),
 ];
 
 class DrawerPage extends StatelessWidget {
   final HomeBloc bloc;
   final HomeModel vm;
   final GlobalKey<ContainerState> slideKey;
+  final Function backLogin;
 
-  DrawerPage(this.vm, this.bloc, this.slideKey);
+  DrawerPage(this.vm, this.bloc, this.slideKey, this.backLogin);
   @override
   Widget build(BuildContext context) {
 
@@ -183,6 +184,7 @@ class DrawerPage extends StatelessWidget {
                           child: GestureDetector(
                             onTap: () {
                               print(6661);
+                              backLogin();
 
                             },
                             child: Wrap(

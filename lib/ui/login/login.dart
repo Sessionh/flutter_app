@@ -6,6 +6,8 @@ import 'package:app/model/login_model.dart';
 import 'package:app/model/main_model.dart';
 import 'login_form.dart';
 import 'package:app/common/bottomText.dart';
+import 'package:app/libs/util.dart';
+import 'login_button.dart';
 
 
 class LoginApp extends StatelessWidget {
@@ -22,7 +24,11 @@ class LoginApp extends StatelessWidget {
       loginButtonController
     );
     final formKey = GlobalKey<FormState>();
-    
+    Util.setUIStyle(false);
+
+    resultClick() {
+      print(333);
+    }
   
 
     return StreamBuilder(
@@ -31,6 +37,7 @@ class LoginApp extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<LoginModel> snap){
         var vm = snap.data;
         return Scaffold(
+          resizeToAvoidBottomPadding: false,
           body: Stack(
             children: <Widget>[
 
@@ -39,7 +46,7 @@ class LoginApp extends StatelessWidget {
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                    decoration: new  BoxDecoration(
-                    // image:  DecorationImage(image: AssetImage('images/appLogo.png'), fit: BoxFit.fill),
+                    // image:  DecorationImage(image: AssetImage('images/logos21.png'), fit: BoxFit.fill),
                     ),
                   child:  Column(
                     children: <Widget>[
@@ -66,19 +73,17 @@ class LoginApp extends StatelessWidget {
                                   children: <Widget>[
                                     new Container(
                                     child: new Icon(Icons.person, color: Colors.black54),
-                                    width: 60.0,
+                                    width: 65.0,
                                   ),
                                   new Expanded(
                                     child: 
                                     TextFormField(
                                         decoration: InputDecoration(labelText: '用户名', border: InputBorder.none),
-                                        // obscureText: false,
-                                        onSaved: (val) {
-
-                                        },
-                                        // keyboardType: TextInputType.text,
-                                        // autocorrect: false,
-                                        // enabled: true, //是否允许用户输入
+                                        obscureText: false,
+                                        onSaved: (val) =>  vm.userName = val,
+                                        keyboardType: TextInputType.text,
+                                        autocorrect: false,
+                                        enabled: true, //是否允许用户输入
                                         style: TextStyle(
                                             color: 
                                                   Colors.black),
@@ -88,7 +93,7 @@ class LoginApp extends StatelessWidget {
                                   ]
                                 ),
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 25.0),
+                                  margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 25.0),
                                   decoration: BoxDecoration(
                                     border: Border(
                                       bottom: BorderSide(width: 0.3, color: Colors.lightBlue.shade900),
@@ -99,7 +104,7 @@ class LoginApp extends StatelessWidget {
                                   children: <Widget>[
                                     new Container(
                                       child: new Icon(Icons.https, color: Colors.black54),
-                                      width: 60.0,
+                                      width: 65.0,
                                     ),
                                     new Expanded(
                                       child: TextFormField(
@@ -108,9 +113,7 @@ class LoginApp extends StatelessWidget {
                                           border: InputBorder.none
                                         ),
                                         focusNode:FocusNode(),
-                                        onSaved: (val) {                             
-                                            vm.password = val;
-                                        },
+                                        onSaved: (val) =>  vm.password = val,
                                         keyboardType: TextInputType.text,
                                         autocorrect: false,
                                         obscureText:  vm.obscureText, // 是否可见
@@ -123,8 +126,20 @@ class LoginApp extends StatelessWidget {
                                     ),
                                     new Container(
                                       child: new IconButton(
-                                        icon: bloc.iconType(0),
+                                        icon: Icon(
+                                          vm.obscureText ? Icons.visibility_off :  Icons.remove_red_eye,
+                                          color: Colors.black54),
                                         onPressed: () {
+                                          print(33);
+                                          if (vm.obscureText) {
+                                            vm.obscureText = false;
+                                            bloc.setDate(vm);
+                                          } else {
+                                             vm.obscureText = true;
+                                             bloc.setDate(vm);
+                                          }
+                                           
+                                          
 
                                         },
 
@@ -136,7 +151,7 @@ class LoginApp extends StatelessWidget {
                                   ]
                                 ),
                                  Container(
-                                  margin: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 35.0),
+                                  margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 35.0),
                                   decoration: BoxDecoration(
                                     border: Border(
                                       bottom: BorderSide(width: 0.3, color: Colors.lightBlue.shade900),
@@ -148,23 +163,33 @@ class LoginApp extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width*0.8,
-                        child: RaisedButton(
-                          padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-                          color: Color.fromRGBO(0, 157, 178, .8),
-                          onPressed: () {
-                            mainModel.isLogin = true;
-                            main.setData(mainModel);
-                          },
-                          child: Center(
-                            child: Text('登陆', style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.white
-                            ),),
-                          ),
-                        )
-                      ),
+                      LoginButton(() {
+                        mainModel.isLogin = true;
+                        main.setData(mainModel);
+
+                      }, '33'),
+
+                      // Container(
+                      //   width: MediaQuery.of(context).size.width*0.8,
+                      //   child: RaisedButton(
+                      //     padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
+                      //     color: Color.fromRGBO(0, 157, 178, .8),
+                      //     onPressed: () {
+                      //       // mainModel.isLogin = true;
+                      //       // main.setData(mainModel);
+                      //       // bloc.forSubmitted(formKey);
+                      //       // print(vm.userName);
+                      //       // print(MediaQuery.of(context).viewInsets.bottom);
+                            
+                      //     },
+                      //     child: Center(
+                      //       child: Text('登陆', style: TextStyle(
+                      //         fontSize: 20.0,
+                      //         color: Colors.white
+                      //       ),),
+                      //     ),
+                      //   )
+                      // ),
                       Row(
                         children: <Widget>[
                           Expanded(
@@ -172,13 +197,17 @@ class LoginApp extends StatelessWidget {
                             child: Container(
                               width: 80.0,
                               padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.1, top: 10.0),
-                              child:   ButtomText(text: '忘记密码？',),
+                              child:   ButtomText(text: '忘记密码？', result: () {
+                                print(222);
+                              },),
                             ),
                           ),
                         
                           Padding(
                             padding: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.1, top: 10.0),
-                            child: ButtomText(text: '注册账户',textColor: Colors.blue,),
+                            child: ButtomText(text: '注册账户',textColor: Colors.blue, focusColor: Colors.grey, result: () {
+                              print(111);
+                            },),
                           )
                           
                         ],
