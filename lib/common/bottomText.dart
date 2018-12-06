@@ -36,13 +36,11 @@ class ButtomTextApp extends State<ButtomText> {
               },
               
               onScaleUpdate: (ev) {
-                print('离开');
                 type = false;
                 _streamController.sink.add(type);
 
               },
               onTapDown: (ev) {
-                print(45);
                  type = true;
                 _streamController.sink.add(type);
 

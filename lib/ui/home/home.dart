@@ -107,7 +107,6 @@ class HomeApp extends StatelessWidget {
                       child: SlideContainer(
                         key: _slideKey,
                         onSlide: (val) {
-                          print(val);
                           vm.position = val;
                           bloc.setDate(vm);
                           if (val == 0.0) {

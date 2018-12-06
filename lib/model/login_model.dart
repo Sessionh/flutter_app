@@ -3,12 +3,14 @@ class LoginModel {
   String password;
   bool obscureText;
   bool isDarkTheme;
+  bool isButtonShow;
 
   LoginModel({
     this.userName,
     this.password,
     this.obscureText,
     this.isDarkTheme,
+    this.isButtonShow,
   });
 
   LoginModel.initDate({
@@ -16,5 +18,6 @@ class LoginModel {
     this.password: '',
     this.obscureText: true,
     this.isDarkTheme: false,
+    this.isButtonShow: false,
   });
 }

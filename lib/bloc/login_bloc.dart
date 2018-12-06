@@ -33,6 +33,7 @@ class LoginBloc implements BlocBase {
       password: vm.password, 
       obscureText: vm.obscureText,
       isDarkTheme: vm.isDarkTheme,
+      isButtonShow: vm.isButtonShow,
     );
     _inList.add(login);
 
@@ -50,8 +51,7 @@ class LoginBloc implements BlocBase {
   Future<String> getProduct() async {
     print("Started getting product");
     await Future.delayed(Duration(seconds: 2));
-    print("Finished getting product");
-    return '{"name": "Flux compensator", "price": 99999.99}';
+    return '成功';
   }
 
 

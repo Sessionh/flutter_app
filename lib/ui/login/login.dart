@@ -167,29 +167,9 @@ class LoginApp extends StatelessWidget {
                         mainModel.isLogin = true;
                         main.setData(mainModel);
 
-                      }, '33'),
+                      }, '33', bloc, vm),
 
-                      // Container(
-                      //   width: MediaQuery.of(context).size.width*0.8,
-                      //   child: RaisedButton(
-                      //     padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-                      //     color: Color.fromRGBO(0, 157, 178, .8),
-                      //     onPressed: () {
-                      //       // mainModel.isLogin = true;
-                      //       // main.setData(mainModel);
-                      //       // bloc.forSubmitted(formKey);
-                      //       // print(vm.userName);
-                      //       // print(MediaQuery.of(context).viewInsets.bottom);
-                            
-                      //     },
-                      //     child: Center(
-                      //       child: Text('登陆', style: TextStyle(
-                      //         fontSize: 20.0,
-                      //         color: Colors.white
-                      //       ),),
-                      //     ),
-                      //   )
-                      // ),
+                      
                       Row(
                         children: <Widget>[
                           Expanded(
@@ -199,6 +179,8 @@ class LoginApp extends StatelessWidget {
                               padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.1, top: 10.0),
                               child:   ButtomText(text: '忘记密码？', result: () {
                                 print(222);
+                                mainModel.isLogin = true;
+                                main.setData(mainModel);
                               },),
                             ),
                           ),
@@ -211,8 +193,7 @@ class LoginApp extends StatelessWidget {
                           )
                           
                         ],
-                      )
-                      
+                      ),
 
                      
                      
@@ -220,17 +201,20 @@ class LoginApp extends StatelessWidget {
                     ],
                   ),
                 ),
+              ),
+              Offstage(
+                offstage: !vm.isButtonShow,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  color: Color.fromRGBO(0, 0, 0, .1),
+
+                ),
               )
 
             ],
           ),
-          // floatingActionButton: FloatingActionButton(
-          //   onPressed: () {
-            
-          //   },
-          //   tooltip: 'Increment',
-          //   child: Icon(Icons.add),
-          // ),
+         
         );
 
       },
