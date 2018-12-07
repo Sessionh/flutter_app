@@ -8,6 +8,9 @@ import 'login_form.dart';
 import 'package:app/common/bottomText.dart';
 import 'package:app/libs/util.dart';
 import 'login_button.dart';
+import 'dart:ui';
+import 'dart:math' as math;
+import 'package:app/common/circleProgress.dart';
 
 
 class LoginApp extends StatelessWidget {
@@ -29,6 +32,17 @@ class LoginApp extends StatelessWidget {
     resultClick() {
       print(333);
     }
+    final nodeFocus = FocusNode();
+    nodeFocus.addListener(() {
+      print(33344);
+      // print(nodeFocus.hasFocus);
+      // if (nodeFocus.hasFocus) {
+
+      // } else {
+
+      // }
+
+    });
   
 
     return StreamBuilder(
@@ -112,7 +126,7 @@ class LoginApp extends StatelessWidget {
                                           labelText: '密码',
                                           border: InputBorder.none
                                         ),
-                                        focusNode:FocusNode(),
+                                        focusNode: nodeFocus,
                                         onSaved: (val) =>  vm.password = val,
                                         keyboardType: TextInputType.text,
                                         autocorrect: false,
@@ -172,17 +186,19 @@ class LoginApp extends StatelessWidget {
                       
                       Row(
                         children: <Widget>[
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              width: 80.0,
-                              padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.1, top: 10.0),
-                              child:   ButtomText(text: '忘记密码？', result: () {
+                        
+                          Padding(
+                            padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.1, top: 10.0),
+                            child: ButtomText(text: '忘记密码？', result: () {
                                 print(222);
                                 mainModel.isLogin = true;
                                 main.setData(mainModel);
-                              },),
-                            ),
+                              },
+                              ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Text(''),
                           ),
                         
                           Padding(
@@ -194,6 +210,12 @@ class LoginApp extends StatelessWidget {
                           
                         ],
                       ),
+
+                      // Demos(),
+
+                     
+                      // CircleProgress(
+                      // )
 
                      
                      
@@ -224,5 +246,57 @@ class LoginApp extends StatelessWidget {
 }
 
 
+class CircleProgressBarPainter extends CustomPainter {
+ 
 
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    double progressBar = 30.0;
+    final paint = new Paint()
+      ..color = Colors.grey[400]
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 6.0;
+    final double wh = math.max(size.width, size.height);
+    final centerX = (size.width - wh) / 2.0,
+        centerY = (size.height - wh) / 2.0;
+    final radius = wh / 2.0;
+    canvas.drawPath(getArcPath(centerX, centerY, radius, true), paint);
+    paint.color = Colors.red;
+    canvas.drawPath(getArcPath(centerX, centerY, radius, false,  progressBar), paint);
+    
+  }
+
+  ///
+  /// 获取Arc的Path
+  /// <pre>
+  /// centerX 圆心坐标x
+  /// centerY 圆心坐标Y
+  /// isClosePath 是否闭合路径
+  /// arcAngle 角度，默认为360°
+  ///
+  /// 说明：下面代码中使用了一个数学公式
+  /// 已知圆心坐标(x, y)，半径(r)，和角度(a)，求圆上某个点的坐标，则有：
+  /// x1 = x + r * cos(a * π / 180.0)
+  /// y1 = y + r * sin(a * π / 180.0)
+  /// </pre>
+  ///
+  Path getArcPath(
+      double centerX, double centerY, double radius, bool isClosePath, [double arcAngle = 360.0]) {
+    var path = Path();
+    for (double i = 0.0; i < arcAngle; i += 0.1) {
+      double x = centerX + radius * math.cos(i * 3.141592653 / 180);
+      double y = centerY / 2.0 + radius * math.sin(i * 3.141592653 / 180);
+      if (i != 0)
+        path.lineTo(x, y);
+      else
+        path.moveTo(x, y);
+    }
+    if (isClosePath) path.close();
+    return path;
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
+}
 

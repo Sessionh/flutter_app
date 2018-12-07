@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'dart:math' as math;
+import 'dart:ui';
 import 'package:app/libs/util.dart';
 import 'package:app/bloc/login_bloc.dart';
 import 'package:app/model/login_model.dart';
+import 'package:app/common/circleProgress.dart';
 
 class LoginButton extends StatefulWidget{
   final Function resultClick;
@@ -90,7 +92,7 @@ class LoginButtonApp extends State<LoginButton> with SingleTickerProviderStateMi
                   borderRadius: BorderRadius.all(Radius.circular(30.0)),
                   color: Color.fromRGBO(0, 157, 178, .8)
                 ),
-                child: SpinKitRing(size: 55.0, color: Colors.white70,),
+                child: SpinKitRing(size: 55.0, color: Colors.white70, lineWidth: 4.0,),
 
               ),
             )
@@ -114,6 +116,7 @@ class LoginButtonApp extends State<LoginButton> with SingleTickerProviderStateMi
 
 
 }
+
 
 
 

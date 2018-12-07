@@ -1,7 +1,4 @@
-import 'dart:convert';
-import 'dart:io';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import "package:app/common/flutter_pulltorefresh/pull_to_refresh.dart";
@@ -80,15 +77,7 @@ class HomeListView extends StatelessWidget {
                 }
 
               }
-              // if (value == 0.0) {
-
-              //    if (model.isSearch) {
-              //      model.isSearch = false;
-              //     bloc.setDate(model);
-
-              //   }
-
-              // }
+          
             } else {
               print('超出范围');
             }
