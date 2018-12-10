@@ -3,7 +3,9 @@ class LoginModel {
   String password;
   bool obscureText;
   bool isDarkTheme;
-  bool isButtonShow;
+  bool isButtonShow; // 是否加载登陆状态
+  bool isModel; // 是否弹出框
+  String modelText; // 弹出框 内容
 
   LoginModel({
     this.userName,
@@ -11,13 +13,17 @@ class LoginModel {
     this.obscureText,
     this.isDarkTheme,
     this.isButtonShow,
+    this.isModel,
+    this.modelText,
   });
 
   LoginModel.initDate({
-    this.userName: '张三',
+    this.userName: '',
     this.password: '',
     this.obscureText: true,
     this.isDarkTheme: false,
     this.isButtonShow: false,
+    this.isModel: false,
+    this.modelText: '',
   });
 }

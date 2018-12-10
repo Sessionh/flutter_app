@@ -4,6 +4,7 @@ import 'package:app/bloc/main_bloc.dart';
 import 'package:app/model/main_model.dart';
 import 'package:app/ui/home/index.dart';
 import 'package:app/ui/login/index.dart';
+import 'package:app/libs/util.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 void main() {
   runApp(BlocProvider<MainBloc>(
@@ -16,6 +17,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Util.setUIStyle(false);
 
     final MainBloc bloc = BlocProvider.of<MainBloc>(context);
     return MaterialApp(

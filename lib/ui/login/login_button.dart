@@ -12,7 +12,7 @@ class LoginButton extends StatefulWidget{
   final String title;
   final LoginBloc bloc;
   final LoginModel vm;
-  LoginButton(this.resultClick, this.title, this.bloc, this.vm);
+  LoginButton({Key key,this.resultClick, this.title, this.bloc, this.vm}):super(key:key);
   LoginButtonApp createState() => new LoginButtonApp();
 }
 
@@ -24,7 +24,7 @@ class LoginButtonApp extends State<LoginButton> with SingleTickerProviderStateMi
   @override
   void initState() {
      _controller = AnimationController(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
     
@@ -46,14 +46,19 @@ class LoginButtonApp extends State<LoginButton> with SingleTickerProviderStateMi
                 onTap: () {
                   _controller.forward();
                   Util.setTimeOut(300, () {
-                      
+                      widget.resultClick(0);
                       widget.vm.isButtonShow = true;
                       widget.bloc.setDate( widget.vm);
-                      widget.bloc.getProduct().then((res) {
+                     
+                      widget.bloc.getProduct(widget.vm).then((res) {
+                        print(res);
                         if (res == '成功') {
-                          widget.resultClick();
+                        
+                         _controller.reset();
+                          widget.resultClick(1);
 
                         }
+                        _controller.reset();
 
                       }
 
@@ -73,7 +78,7 @@ class LoginButtonApp extends State<LoginButton> with SingleTickerProviderStateMi
                     
                   ),
                   child:Center(
-                    child: Text('登陆', style: TextStyle(
+                    child: Text('登陆${widget.vm.userName}', style: TextStyle(
                       fontSize: 20.0,
                       color: Colors.white
                     ),),

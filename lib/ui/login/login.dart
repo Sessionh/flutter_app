@@ -11,6 +11,7 @@ import 'login_button.dart';
 import 'dart:ui';
 import 'dart:math' as math;
 import 'package:app/common/circleProgress.dart';
+import 'package:app/common/textModel.dart';
 
 
 class LoginApp extends StatelessWidget {
@@ -27,6 +28,7 @@ class LoginApp extends StatelessWidget {
       loginButtonController
     );
     final formKey = GlobalKey<FormState>();
+   
     Util.setUIStyle(false);
 
     resultClick() {
@@ -177,11 +179,25 @@ class LoginApp extends StatelessWidget {
                           ),
                         ),
                       ),
-                      LoginButton(() {
-                        mainModel.isLogin = true;
-                        main.setData(mainModel);
+                      LoginButton(
+                        resultClick: (type) {
+                          if (type == 0) { 
+                            bloc.forSubmitted(formKey);
+                            FocusScope.of(context).requestFocus(new FocusNode());// 失去焦点 关闭键盘
+                            
 
-                      }, '33', bloc, vm),
+                          } else {
+                            mainModel.isLogin = true;
+                            main.setData(mainModel);
+
+                          }
+                          
+                         
+                            
+                        },
+                        bloc: bloc,
+                        vm: vm,
+                      ),
 
                       
                       Row(
@@ -211,11 +227,10 @@ class LoginApp extends StatelessWidget {
                         ],
                       ),
 
-                      // Demos(),
-
-                     
-                      // CircleProgress(
-                      // )
+                    ListTile(
+                      leading: const Icon(Icons.event_seat),
+                      title: const Text('The seat for the narrator'),
+                    )
 
                      
                      
@@ -224,15 +239,20 @@ class LoginApp extends StatelessWidget {
                   ),
                 ),
               ),
-              Offstage(
-                offstage: !vm.isButtonShow,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  color: Color.fromRGBO(0, 0, 0, .1),
+              // Offstage(
+              //   offstage: !vm.isButtonShow,
+              //   child: Container(
+              //     width: MediaQuery.of(context).size.width,
+              //     height: MediaQuery.of(context).size.height,
+              //     color: Color.fromRGBO(0, 0, 0, .1),
 
-                ),
+              //   ),
+              // ),
+              Offstage(
+                 offstage: !vm.isModel,
+                child: TextModel(title: vm.modelText,),
               )
+              
 
             ],
           ),

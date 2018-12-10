@@ -2,6 +2,7 @@ import 'package:app/bloc/bloc_provider.dart';
 import 'package:app/model/login_model.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:flutter/material.dart';
+import 'package:app/libs/util.dart';
 
 class LoginBloc implements BlocBase {
   PublishSubject<LoginModel> _mainController = PublishSubject<LoginModel>();
@@ -34,6 +35,8 @@ class LoginBloc implements BlocBase {
       obscureText: vm.obscureText,
       isDarkTheme: vm.isDarkTheme,
       isButtonShow: vm.isButtonShow,
+      isModel: vm.isModel,
+      modelText: vm.modelText,
     );
     _inList.add(login);
 
@@ -48,11 +51,33 @@ class LoginBloc implements BlocBase {
 
 
   // 模拟网络返回JSON字符串
-  Future<String> getProduct() async {
-    print("Started getting product");
-    await Future.delayed(Duration(seconds: 2));
-    return '成功';
+  Future<String> getProduct(vm) async {
+    String str = '';
+    
+   
+    if (vm.userName == '' || vm.password == '') {
+      str = '失败';
+      vm.isModel = true;
+      vm.modelText = '用户名或密码为空';
+      vm.isButtonShow = false;
+      setDate(vm);
+      Util.setTimeOut(2000, () {
+        vm.isModel = false;
+        setDate(vm);
+
+      });
+
+    } else {
+      
+      await Future.delayed(Duration(seconds: 2));
+      str = '成功';
+
+    }
+    
+    return str;
   }
+
+ 
 
 
 
