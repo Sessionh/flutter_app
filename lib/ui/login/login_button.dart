@@ -78,7 +78,7 @@ class LoginButtonApp extends State<LoginButton> with SingleTickerProviderStateMi
                     
                   ),
                   child:Center(
-                    child: Text('登陆${widget.vm.userName}', style: TextStyle(
+                    child: Text('登陆', style: TextStyle(
                       fontSize: 20.0,
                       color: Colors.white
                     ),),

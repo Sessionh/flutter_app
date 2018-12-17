@@ -52,6 +52,14 @@ class HomeApp extends StatelessWidget {
         butAnimation(animation, type, icon, color) => Center(
           child: Column(
             children: <Widget>[
+              Container(
+                  height: 2.8,
+                  width: animation.value,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(2.8)),
+                    color: const Color.fromRGBO(55, 56, 79, .9),
+                  ),
+              ),
               GestureDetector(
                 onTap: () {
                   if (type == 0) {
@@ -74,14 +82,7 @@ class HomeApp extends StatelessWidget {
                     child: Icon( icon, size: 35.0, color: color),
                 ),
               ),
-              Container(
-                    height: 3.8,
-                    width: animation.value,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(2.8)),
-                      color: const Color.fromRGBO(55, 56, 79, .9),
-                    ),
-                ),
+           
             ],
           ),
         );

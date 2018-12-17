@@ -227,10 +227,7 @@ class LoginApp extends StatelessWidget {
                         ],
                       ),
 
-                    ListTile(
-                      leading: const Icon(Icons.event_seat),
-                      title: const Text('The seat for the narrator'),
-                    )
+                   
 
                      
                      
